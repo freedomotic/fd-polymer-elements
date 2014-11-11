@@ -1,0 +1,57 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
+<link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
+<link rel="import" href="../fd-polymer-image/fd-polymer-image.html">
+<!--
+Element providing solution to no problem in particular.
+
+##### Example
+
+    <fd-thing></fd-thing>
+
+@element fd-polymer-thing
+@blurb Element providing solution to no problem in particular.
+@status alpha
+@homepage http://polymerlabs.github.io/fd-polymer-thing
+-->
+<polymer-element name="fd-thing" attributes="apiUrl thingUuid credentialRequired">
+
+  <template>
+     <style>
+    :host {
+      display: block;
+      position: relative;
+      background-color: white;
+      padding: 20px;
+      width: 100%;
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+    .thing-header {
+      margin-bottom: 10px;
+    }
+    fd-image {
+
+    }
+    </style>
+  <fd-api-settings credentialRequired="{{credentialRequired}}" apiUrl="{{apiUrl}}"></fd-api-settings>
+  <fd-rest-service credentialRequired="{{credentialRequired}}" apiUrl="{{apiUrl}}" 
+                   fdtype="objects/{{thingUuid}}" fditems="{{object}}"></fd-rest-service>    
+
+ <div class="thing-header" layout horizontal center>
+  <fd-image primary="{{object.representation[object.currentRepresentation].icon}}" width="70" height="70"></fd-image>
+  <h2>{{object.name}}</h2>
+ </div>
+<content></content>
+    
+  </template>
+
+  <script>
+
+    Polymer({
+      
+    });
+
+  </script>
+
+</polymer-element>

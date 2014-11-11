@@ -1,0 +1,19 @@
+{
+  "name": "fd-polymer-thing",
+  "version": "0.1.0",
+  "keywords": [
+    "freedomotic",
+    "seed",
+    "polymer",
+    "web-components"
+  ],
+  "main": "fd-polymer-thing.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.4.0",
+    "fd-polymer-rest-service": "file:///home/matteo/development/components/fd-polymer-rest-service/.git/",
+    "fd-polymer-image": "file:///home/matteo/development/components/fd-polymer-image/.git/"
+  },
+  "devDependencies": {
+    "polymer-test-tools": "Polymer/polymer-test-tools#^0.4.0"
+  }
+}
