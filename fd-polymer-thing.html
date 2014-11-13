@@ -1,54 +1,162 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
+<link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-image/fd-polymer-image.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+
 <!--
-Element providing solution to no problem in particular.
+Element providing proof of concept of a Thing card, with all needed features
 
 ##### Example
 
     <fd-thing></fd-thing>
 
-@element fd-polymer-thing
-@blurb Element providing solution to no problem in particular.
+@element fd-thing
+@blurb Element providing proof of concept of a Thing card, with all needed features
 @status alpha
-@homepage http://polymerlabs.github.io/fd-polymer-thing
+@homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-thing" attributes="apiUrl thingUuid credentialRequired">
+<polymer-element name="fd-thing" attributes="ssl address port apiVersion thingUuid credentialRequired guest">
 
   <template>
      <style>
     :host {
       display: block;
       position: relative;
-      background-color: white;
+      background-color:#eceff1;
       padding: 20px;
       width: 100%;
       font-size: 1.2rem;
       font-weight: 300;
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
     .thing-header {
       margin-bottom: 10px;
     }
     fd-image {
-
+      border-radius: 50%;
+      border-color:  #263238;
+      border-style: solid 2px;
+      background-color: #4caf50;
+      margin: 5px 10px;
+      padding: 5px;
     }
     </style>
-  <fd-api-settings credentialRequired="{{credentialRequired}}" apiUrl="{{apiUrl}}"></fd-api-settings>
-  <fd-rest-service credentialRequired="{{credentialRequired}}" apiUrl="{{apiUrl}}" 
-                   fdtype="objects/{{thingUuid}}" fditems="{{object}}"></fd-rest-service>    
+  <fd-api-settings 
+    credentialRequired="{{credentialRequired}}" 
+    ssl="{{ssl}}" address="{{address}}" 
+    port="{{port}}" apiVersion="{{apiVersion}}"
+    apiUrl="{{apiUrl}}" write>
+  </fd-api-settings>
 
- <div class="thing-header" layout horizontal center>
-  <fd-image primary="{{object.representation[object.currentRepresentation].icon}}" width="70" height="70"></fd-image>
-  <h2>{{object.name}}</h2>
+  <fd-rest-service 
+    id="objectData"
+    fdtype="objects/{{thingUuid}}" 
+    fditems="{{object}}">
+  </fd-rest-service>    
+  
+  <fd-rest-service 
+    id="objectClick"
+    fdtype="objects/{{thingUuid}}/click" 
+    auto="false" method="POST">
+  </fd-rest-service>              
+  
+  <fd-ws-service 
+    ssl="{{ssl}}"
+    address="{{address}}" 
+    port="{{port}}" 
+    apiVersion="{{apiVersion}}"
+    wstype="objectchange" 
+    on-message="{{ updateObject }}">
+  </fd-ws-service>     
+
+<paper-shadow animated z="1">
+ <div class="thing-header" layout horizontal start>
+  <fd-image primary="{{object.representation[object.currentRepresentation].icon}}" width="70" height="70" on-tap="{{tapObject}}"></fd-image>
+  <div layout vertical start>
+    <h2>{{object.name}}</h2>
+    <p>{{object.description}}</p>
+    <content></content>
+  </div>
  </div>
-<content></content>
-    
+ </paper-shadow>
   </template>
-
   <script>
+    Polymer("fd-thing", {
+     /**
+       * The 'credentialRequired' attribute tells whether the API call requires authentication 
+       *
+       * @attribute credentialRequired
+       * @type boolean
+       */
+     /**
+       * The 'guest' attribute tells whether the API call should be made as a guest user 
+       *
+       * @attribute guest
+       * @type boolean
+       */
+     /**
+       * The 'thingUuid' attribute specifies the uuid of Thing to show
+       *
+       * @attribute thingUuid
+       * @type string
+       */
+     /**
+       * The 'credentialRequired' attribute tells whether the API call requires authentication 
+       *
+       * @attribute credentialRequired
+       * @type boolean
+       */
+     /**
+       * The 'address' attribute specifies the hostname or ip address of API service 
+       *
+       * @attribute address
+       * @type string
+       */
+    
+     /**
+       * The 'apiVersion' attribute specifies the API version to use 
+       *
+       * @attribute apiVersion
+       * @type string
+       */
+    
+     /**
+       * The 'port' attribute specifies the tcp port of API service. 
+       * Default value 0 mean the port number is choosen from the SSL attribute, 
+       * so port will be 9111 if no SSL, and 9113 is SSL
+       * @attribute port
+       * @type int
+       */
+    
+     /**
+       * The 'ssl' attribute tells whether the API call requires a encrypted connection 
+       *
+       * @attribute ssl
+       * @type boolean
+       */
+    guest: false,  
+    tapObject: function(){
+      this.$.objectClick.go();
+    },
+    guestChanged: function(){
+      if (!!this.guest){
+        console.log(this.$.objectData.attributes);
+        this.$.objectData.attributes.credentialRequired=false;
+        this.$.objectData.attributes.headers = {};
+        this.$.objectData.attributes.headers["X-Authorization"]= "Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
+        console.log(this.$.objectData.attributes);
 
-    Polymer({
+      }
+    },
+    updateObject: function(event){
+        var uuid = event.detail.data.uuid;
+        if(uuid === this.object.uuid){
+          console.log("Object List - Asynch update of: " + uuid);
+          this.$.objectData.go();
+        } 
+      },
       
     });
 
