@@ -151,10 +151,11 @@ Element providing proof of concept of a Thing card, with all needed features
       }
     },
     updateObject: function(event){
-        var uuid = event.detail.data.uuid;
-        if(uuid === this.object.uuid){
-          console.log("Object List - Asynch update of: " + uuid);
-          this.$.objectData.go();
+        var data = JSON.parse(event.detail);
+        console.log(data);
+        if(data.uuid === this.object.uuid){
+          console.log("Object List - Asynch update of: " + data.uuid);
+          this.object = data;
         } 
       },
       
