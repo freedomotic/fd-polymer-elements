@@ -43,7 +43,7 @@ Element providing proof of concept of a Thing card, with all needed features
       padding: 5px;
     }
     </style>
-  <fd-api-settings 
+  <fd-api-settings
     credentialRequired="{{credentialRequired}}" 
     ssl="{{ssl}}" address="{{address}}" 
     port="{{port}}" apiVersion="{{apiVersion}}"
@@ -136,18 +136,17 @@ Element providing proof of concept of a Thing card, with all needed features
        * @attribute ssl
        * @type boolean
        */
-    guest: false,  
+    guest: undefined,  
     tapObject: function(){
       this.$.objectClick.go();
     },
     guestChanged: function(){
       if (!!this.guest){
-        console.log(this.$.objectData.attributes);
-        this.$.objectData.attributes.credentialRequired=false;
-        this.$.objectData.attributes.headers = {};
-        this.$.objectData.attributes.headers["X-Authorization"]= "Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
-        console.log(this.$.objectData.attributes);
-
+        //this.$.objectData.credentialRequired=false;
+        if (this.$.objectData.headers == undefined) {
+          this.$.objectData.headers = {};
+        }
+        this.$.objectData.headers.Authorization= "Basic Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
       }
     },
     updateObject: function(event){
@@ -155,7 +154,10 @@ Element providing proof of concept of a Thing card, with all needed features
         console.log(data);
         if(data.uuid === this.object.uuid){
           console.log("Object List - Asynch update of: " + data.uuid);
+          console.log(this.object);
+          console.log("O:" + this.object.currentRepresentation + " D:" + data.currentRepresentation);
           this.object = data;
+          console.log("N:" + this.object.currentRepresentation);
         } 
       },
       
