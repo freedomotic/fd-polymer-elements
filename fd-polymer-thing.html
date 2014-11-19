@@ -53,7 +53,8 @@ Element providing proof of concept of a Thing card, with all needed features
   <fd-rest-service 
     id="objectData"
     fdtype="objects/{{thingUuid}}" 
-    fditems="{{object}}">
+    fditems="{{object}}"
+    on-rest-response="{{startWS}}">
   </fd-rest-service>    
   
   <fd-rest-service 
@@ -63,12 +64,14 @@ Element providing proof of concept of a Thing card, with all needed features
   </fd-rest-service>              
   
   <fd-ws-service 
+    id="wss"
     ssl="{{ssl}}"
     address="{{address}}" 
     port="{{port}}" 
     apiVersion="{{apiVersion}}"
     wstype="objectchange" 
-    on-message="{{ updateObject }}">
+    on-message="{{ updateObject }}"
+    auto="false">
   </fd-ws-service>     
 
 <paper-shadow animated z="1">
@@ -147,6 +150,11 @@ Element providing proof of concept of a Thing card, with all needed features
           this.$.objectData.headers = {};
         }
         this.$.objectData.headers.Authorization= "Basic Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
+        
+        if (this.$.objectClick.headers == undefined) {
+          this.$.objectClick.headers = {};
+        }
+        this.$.objectClick.headers.Authorization= "Basic Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
       }
     },
     updateObject: function(event){
@@ -160,6 +168,10 @@ Element providing proof of concept of a Thing card, with all needed features
           console.log("N:" + this.object.currentRepresentation);
         } 
       },
+      startWS: function(){
+        console.log("Starting WS");
+        this.$.wss.go();
+      }
       
     });
 
