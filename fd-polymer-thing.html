@@ -3,6 +3,7 @@
 <link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-image/fd-polymer-image.html">
+<link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
 
 <!--
@@ -78,8 +79,8 @@ Element providing proof of concept of a Thing card, with all needed features
  <div class="thing-header" layout horizontal start>
   <fd-image primary="{{object.representation[object.currentRepresentation].icon}}" width="70" height="70" on-tap="{{tapObject}}"></fd-image>
   <div layout vertical start>
-    <h2>{{object.name}}</h2>
-    <p>{{object.description}}</p>
+    <h2>{{'name' | translate}}: {{object.name}}</h2>
+    <p>{{'description' | translate}}: {{object.description}}</p>
     <content></content>
   </div>
  </div>
