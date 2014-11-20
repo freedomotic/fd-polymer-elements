@@ -142,6 +142,7 @@ Element providing proof of concept of a Thing card, with all needed features
        */
     guest: undefined,  
     tapObject: function(){
+      console.log("Object clicked, calling " + this.$.objectClick.url);
       this.$.objectClick.go();
     },
     guestChanged: function(){
