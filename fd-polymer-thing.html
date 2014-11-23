@@ -11,14 +11,15 @@ Element providing proof of concept of a Thing card, with all needed features
 
 ##### Example
 
-    <fd-thing></fd-thing>
+    <fd-thing  address="fritz.bestmazzo.it" port="9111" apiVersion="v3" 
+          thingUuid="76fd619c-617b-4fb7-9870-8f08164c4926" guest></fd-thing>
 
 @element fd-thing
 @blurb Element providing proof of concept of a Thing card, with all needed features
-@status alpha
+@status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-thing" attributes="ssl address port apiVersion thingUuid credentialRequired guest">
+<polymer-element name="fd-thing" attributes="ssl address port apiVersion thingUuid guest">
 
   <template>
      <style>
@@ -48,7 +49,7 @@ Element providing proof of concept of a Thing card, with all needed features
     credentialRequired="{{credentialRequired}}" 
     ssl="{{ssl}}" address="{{address}}" 
     port="{{port}}" apiVersion="{{apiVersion}}"
-    apiUrl="{{apiUrl}}" write>
+    apiUrl="{{apiUrl}}" guestAccess="{{guest}}">
   </fd-api-settings>
 
   <fd-rest-service 
@@ -157,7 +158,7 @@ Element providing proof of concept of a Thing card, with all needed features
           this.$.objectClick.headers = {};
         }
         this.$.objectClick.headers.Authorization= "Basic Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
-      }
+     }
     },
     updateObject: function(event){
         var data = JSON.parse(event.detail);
