@@ -2,10 +2,10 @@
 <link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
 <link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
-<link rel="import" href="../fd-polymer-image/fd-polymer-image.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../fd-polymer-card/fd-polymer-card.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -19,7 +19,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-thing" attributes="ssl address port apiVersion thingUuid guest card">
+<polymer-element name="fd-thing" attributes="ssl address port apiVersion thingUuid guest mode">
 
   <template>
      <style>
@@ -30,39 +30,10 @@ Element providing proof of concept of a Thing card, with all needed features
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
-    .thing-container {
-      margin-bottom: 10px;
-      border-radius: 20px;
+    paper-icon-button /deep/ core-icon[role=img] {
+      width: 85px;
+      height: 85px;
     }
-    .card{
-      width: 300px;
-      height: 250px;
-    }
-    .list{
-      width: 500px;
-      height: 100px;
-    }
-    .thing-subheader {
-      margin: 0px 10px;
-    }
-    .thing-actionbar{
-      margin: 5px;
-    }
-    fd-image {
-      border-top-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      background-color: #8bae2d;
-      padding: 5px;
-    }
-    h2 {
-      margin: 5px 0px;
-    }
-paper-icon-button{
-   color: #999;
-}
-paper-icon-button:hover{
-   color: #555;
-}
     </style>
   <fd-api-settings
     credentialRequired="{{credentialRequired}}" 
@@ -94,44 +65,15 @@ paper-icon-button:hover{
     on-message="{{ updateObject }}"
     auto="false">
   </fd-ws-service>     
-<template if="{{!!card}}">
-<paper-shadow animated z="1" class="thing-container card">
-  <div layout vertical start>
- <div  layout horizontal self-stretch>
-  <fd-image primary="{{object.representation[object.currentRepresentation].icon}}" width="110" height="110" on-tap="{{tapObject}}"></fd-image>
-  <div layout vertical flex self-stretch>
-    <div layout horizontal reverse class="thing-actionbar">
-       <paper-icon-button icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-       <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-    </div>
-  </div>
-  </div>
-  <div layout vertical class="thing-subheader" on-tap="{{ toggleCard }}">
-    <h2>{{object.name}}</h2>
-    <small>{{object.description}}</small>
-    <content></content>
-  </div>
- </div>
- </paper-shadow>
- </template>
-
-<template if="{{!card}}">
-<paper-shadow animated z="1" class="thing-container list">
-  <div  layout horizontal start>
-  <fd-image primary="{{object.representation[object.currentRepresentation].icon}}" width="85" height="85" on-tap="{{tapObject}}" style="border-bottom-left-radius: 20px;"></fd-image>
-    <div layout vertical flex self-stretch class="thing-subheader">
-    <h2>{{object.name}}</h2>
-    <small>{{object.description}}</small>
-    <content></content>
-    <div layout horizontal reverse class="thing-actionbar">
-       <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
-       <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-    </div>
-  </div>
- </div>
- </paper-shadow>
- </template>
-  </template>
+<fd-card on-icon-tap="{{tapObject}}">
+<icon>
+  <paper-icon-button src="{{objectIcon | asFreedomoticResource(apiUrl) }}" on-tap="{{tapObject}}" >
+  </paper-icon-button>
+</icon>
+<name>{{object.name}}</name>
+<description>{{object.description}}</description>
+</fd-card>
+</template>
   <script>
     Polymer("fd-thing", {
      /**
@@ -186,10 +128,17 @@ paper-icon-button:hover{
        * @attribute ssl
        * @type boolean
        */
-       card: true,
+    mode: 'matCard',
     guest: undefined,  
+    objectIcon: undefined,
+    object: undefined,
     tapObject: function(){
       this.$.objectClick.go();
+    },
+    objectChanged: function(){
+      if (!!this.object && !!this.object.representation){
+        this.objectIcon = this.object.representation[this.object.currentRepresentation].icon;
+      }
     },
     guestChanged: function(){
       if (!!this.guest){
@@ -213,11 +162,7 @@ paper-icon-button:hover{
       },
       startWS: function(){
         this.$.wss.go();
-      },
-      toggleCard: function(){
-        this.card = !this.card;
-      }
-      
+      }      
     });
 
   </script>
