@@ -46,13 +46,15 @@ Element providing proof of concept of a Thing card, with all needed features
     id="objectData"
     fdtype="objects/{{thingUuid}}" 
     fditems="{{object}}"
-    on-rest-response="{{startWS}}">
+    on-rest-response="{{startWS}}"
+    guest="{{guest}}">
   </fd-rest-service>    
   
   <fd-rest-service 
     id="objectClick"
     fdtype="objects/{{thingUuid}}/click" 
-    auto="false" method="POST">
+    auto="false" method="POST"
+    guest="{{guest}}">
   </fd-rest-service>              
   
   <fd-ws-service 
@@ -139,20 +141,6 @@ Element providing proof of concept of a Thing card, with all needed features
       if (!!this.object && !!this.object.representation){
         this.objectIcon = this.object.representation[this.object.currentRepresentation].icon;
       }
-    },
-    guestChanged: function(){
-      if (!!this.guest){
-        //this.$.objectData.credentialRequired=false;
-        if (this.$.objectData.headers == undefined) {
-          this.$.objectData.headers = {};
-        }
-        this.$.objectData.headers.Authorization= "Basic Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
-        
-        if (this.$.objectClick.headers == undefined) {
-          this.$.objectClick.headers = {};
-        }
-        this.$.objectClick.headers.Authorization= "Basic Z3Vlc3Q6Z3Vlc3Q="; // user:pass = guest:guest
-     }
     },
     updateObject: function(event){
         var data = JSON.parse(event.detail);
