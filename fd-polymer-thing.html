@@ -4,6 +4,8 @@
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="../paper-slider/paper-slider.html">
+<link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../fd-polymer-card/fd-polymer-card.html">
 <!--
@@ -55,8 +57,14 @@ Element providing proof of concept of a Thing card, with all needed features
     fdtype="objects/{{thingUuid}}/click" 
     auto="false" method="POST"
     guest="{{guest}}">
-  </fd-rest-service>              
-  
+  </fd-rest-service>
+
+  <fd-rest-service 
+    id="objectBehaviorChange"
+    auto="false" method="POST"
+    guest="{{guest}}">
+  </fd-rest-service>  
+
   <fd-ws-service 
     id="wss"
     ssl="{{ssl}}"
@@ -74,6 +82,19 @@ Element providing proof of concept of a Thing card, with all needed features
 </icon>
 <name>{{object.name}}</name>
 <description>{{object.description}}</description>
+<extra>
+  <template repeat="{{behavior in object.behaviors}}">
+    <div layout horizontal self-stretch >
+    <div layout style="padding-right:5px;height:32px;">{{behavior.name | translate(apiUrl)}}</div>
+    <template if="{{behavior['@class']=='com.freedomotic.model.object.RangedIntBehavior'}}" >
+      <paper-slider flex style="width:100%;" id="{{behavior.name}}" layout value="{{behavior.value}}" min="{{behavior.min}}" max="{{behavior.max}}" pin on-change="{{onBehaviorChange}}"></paper-slider>
+    </template>
+    <template if="{{behavior['@class']=='com.freedomotic.model.object.BooleanBehavior'}}" >
+      <paper-toggle-button id="{{behavior.name}}" layout checked="{{behavior.value}}" on-change="{{onBehaviorChange}}"></paper-toggle-button>
+    </template>
+    </div>
+  </template>
+</extra>
 </fd-card>
 </template>
   <script>
@@ -150,7 +171,17 @@ Element providing proof of concept of a Thing card, with all needed features
       },
       startWS: function(){
         this.$.wss.go();
-      }      
+      },
+      onBehaviorChange: function(evt, t,d){
+        for (behavior in this.object.behaviors){
+          if (this.object.behaviors[behavior].name === d.id){
+              this.$.objectBehaviorChange.fdtype="objects/" + this.object.uuid + 
+                "/behaviorchange/"+ this.object.behaviors[behavior].name + "/" + this.object.behaviors[behavior].value;
+              console.log(this.$.objectBehaviorChange.fdtype);
+              this.$.objectBehaviorChange.go();
+          }
+        }
+      }
     });
 
   </script>
