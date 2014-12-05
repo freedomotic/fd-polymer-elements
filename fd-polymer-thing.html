@@ -21,7 +21,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-thing" attributes="ssl address port apiVersion thingUuid guest mode">
+<polymer-element name="fd-thing" attributes="ssl address port apiVersion object thingUuid guest mode">
 
   <template>
      <style>
@@ -38,7 +38,6 @@ Element providing proof of concept of a Thing card, with all needed features
     }
     </style>
   <fd-api-settings
-    credentialRequired="{{credentialRequired}}" 
     ssl="{{ssl}}" address="{{address}}" 
     port="{{port}}" apiVersion="{{apiVersion}}"
     apiUrl="{{apiUrl}}" guestAccess="{{guest}}">
@@ -49,12 +48,13 @@ Element providing proof of concept of a Thing card, with all needed features
     fdtype="objects/{{thingUuid}}" 
     fditems="{{object}}"
     on-rest-response="{{startWS}}"
-    guest="{{guest}}">
+    guest="{{guest}}"
+    auto="false">
   </fd-rest-service>    
   
   <fd-rest-service 
     id="objectClick"
-    fdtype="objects/{{thingUuid}}/click" 
+    fdtype="objects/{{object.uuid}}/click" 
     auto="false" method="POST"
     guest="{{guest}}">
   </fd-rest-service>
@@ -75,7 +75,7 @@ Element providing proof of concept of a Thing card, with all needed features
     on-message="{{ updateObject }}"
     auto="false">
   </fd-ws-service>     
-<fd-card on-icon-tap="{{tapObject}}">
+<fd-card on-icon-tap="{{tapObject}}" mode="{{mode}}">
 <icon>
   <paper-icon-button src="{{objectIcon | asFreedomoticResource(apiUrl) }}" on-tap="{{tapObject}}" >
   </paper-icon-button>
@@ -95,6 +95,22 @@ Element providing proof of concept of a Thing card, with all needed features
     </div>
   </template>
 </extra>
+<modify>
+  <fd-rest-service 
+    id="objectSave"
+    fdtype="objects/{{object.uuid}}" 
+    guest="{{guest}}"
+    auto="false"
+    method="PUT">
+  </fd-rest-service>   
+<div layout vertical>
+<paper-input label="{{'name' | translate(apiUrl) }}" value="{{object.name}}" floatingLabel></paper-input>
+<paper-input label="{{'description' | translate(apiUrl) }}" value="{{object.description}}" floatingLabel></paper-input>
+<paper-input label="{{'protocol' | translate(apiUrl) }}" value="{{object.protocol}}"floatingLabel></paper-input>
+<paper-input label="{{'address' | translate(apiUrl) }}" value="{{object.phisicalAddress}}" floatingLabel></paper-input>
+</div>
+<paper-button affirmative on-tap="{{ saveObject }}">Save</paper-button>
+</modify>
 </fd-card>
 </template>
   <script>
@@ -155,6 +171,7 @@ Element providing proof of concept of a Thing card, with all needed features
     guest: undefined,  
     objectIcon: undefined,
     object: undefined,
+    thingUuid: undefined,
     tapObject: function(){
       this.$.objectClick.go();
     },
@@ -181,6 +198,16 @@ Element providing proof of concept of a Thing card, with all needed features
               this.$.objectBehaviorChange.go();
           }
         }
+      },
+      ready: function(){
+        if (!!this.thingUuid ){
+          this.$.objectData.auto=true;
+          this.$.objectData.go();
+        }
+      },
+      saveObject: function(){
+        this.$.objectSave.body = JSON.stringify(this.object);
+        this.$.objectSave.go();
       }
     });
 
