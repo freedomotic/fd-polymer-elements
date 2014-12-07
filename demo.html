@@ -4,63 +4,31 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>fd-polymer-thing Demo</title>
   <script src="../webcomponentsjs/webcomponents.min.js"></script>
-  <link rel="import" href="fd-polymer-thing.html">
+  <link rel="import" href="fd-polymer-things.html">
+  <link rel="import" href="fd-polymer-plugins.html">
+  <link rel="import" href="fd-polymer-users.html">
+  <link rel="import" href="fd-polymer-roles.html">
   <link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
   <link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 </head>
 <body unresolved>
- <template is="auto-binding">
- <div layout vertical>
-  <p>An `fd-thing` looks like this:</p>
-  <div layout horizontal >
-    <fd-api-settings
-    address="fritz.bestmazzo.it" 
-    port="9111" 
-    apiVersion="v3">
-  </fd-api-settings>
-  	<fd-thing guest="true" thingUuid="76fd619c-617b-4fb7-9870-8f08164c4926"></fd-thing>
-
- <fd-rest-service 
-    id="objectList"
-    fdtype="objects" 
-    fditems="{{objects}}"
-    on-rest-response="{{ startWSS }}"
-    guest="true">
-  </fd-rest-service>    
-</div>
-<p>A list of `fd-thing`s looks like this:</p>
-
-  <div layout horizontal wrap  >
-  <template repeat="{{object in objects}}">
-     	<fd-thing object="{{object}}" style="padding:5px;" mode="list" ></fd-thing>
-  </template>
-     <fd-ws-service 
-    id="wss"
+  <fd-api-settings
     address="fritz.bestmazzo.it" 
     port="9111" 
     apiVersion="v3"
-    wstype="objectchange" 
-    on-message="{{ updateObject }}"
-    auto="false">
- </fd-ws-service>     
+    guest="true">
+  </fd-api-settings>
+<div layout vertical>
+<p>A list of `fd-thing`s looks like this:</p>
+ <fd-things guest="true"></fd-things>
+<p>A list of `fd-plugin`s looks like this:</p>
+ <fd-plugins guest="true"></fd-plugins>
+<p>A list of `fd-user`s looks like this:</p>
+ <fd-users guest="true"></fd-users>
+<p>A list of `fd-role`s looks like this:</p>
+ <fd-roles guest="true"></fd-roles>
+  </div> 
 
- </div>
- </div>
- </template>
-   <script>
-	var scope = document.querySelector('template[is=auto-binding]');
-	scope.startWSS = function(e) { 
-	 	var d =document.querySelector('fd-ws-service');
-	 	d.go();
-	};
-	scope.updateObject = function(event){
-        var data = JSON.parse(event.detail);
-        for (object in scope.objects){
-        	if(data.uuid === scope.objects[object].uuid){
-        		scope.objects[object] = data;
-        	}
-        } 
-    };
-   </script>
+  </div>
 </body>
 </html>
