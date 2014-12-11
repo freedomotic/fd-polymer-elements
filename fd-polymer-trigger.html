@@ -1,11 +1,14 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
+<link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
+<link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="../paper-slider/paper-slider.html">
+<link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../core-icons/social-icons.html">
-
 <link rel="import" href="fd-generic-item.html">
 <link rel="import" href="fd-polymer-properties.html">
-<link rel="import" href="fd-polymer-tags.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -19,7 +22,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-user" attributes="ssl address port apiVersion user uuid guest mode">
+<polymer-element name="fd-trigger" attributes="ssl address port apiVersion trigger uuid guest mode">
 
   <template>
      <style>
@@ -33,46 +36,34 @@ Element providing proof of concept of a Thing card, with all needed features
     paper-icon-button /deep/ core-icon[role=img] {
       width: 85px;
       height: 85px;
-      color: #333;
     }
     </style>
-   <fd-api-settings
+  <fd-api-settings
     ssl="{{ssl}}" address="{{address}}" 
     port="{{port}}" apiVersion="{{apiVersion}}"
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
-  
-<fd-generic-item type="users" on-icon-tap="" mode="{{mode}}" item="{{user}}" guest="{{guest}}" uuid="{{uuid}}" >
-<icon>
-  <template if="{{!!user.properties.iconfile}}">
-    <paper-icon-button src="{{user.properties.iconfile | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
-  </template>
-  <template if="{{!!user.properties.iconurl}}">
-    <paper-icon-button src="{{user.properties.iconurl | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
-  </template>
-  <template if="{{!user.properties.iconfile && !user.properties.iconurl}}" >
-    <paper-icon-button icon="social:person"></paper-icon-button>
-  </template>
-</icon>
-<name>{{user.name}}</name>
-<description>{{user.properties.fullname}}</description>
-<extra></extra>
-<modify>
-  <div layout vertical>
-    <h3>{{user.name}}</h3>
-    <paper-input label="{{'name' | translate }}" value="{{user.properties.fullname}}" floatingLabel></paper-input>
-    <paper-input label="{{'email' | translate }}" value="{{user.properties.email}}"floatingLabel></paper-input>
-    <fd-properties properties="{{user.properties}}"></fd-properties>
-    <div>
-      {{'roles' | translate}}: 
-      <fd-tags tags="{{user.roles}}"></fd-tags>
+
+
+<fd-generic-item on-icon-tap="" mode="{{mode}}" guest="{{guest}}" item="{{trigger}}" uuid="{{uuid}}" type="triggers">
+  <icon>
+    <paper-icon-button icon="track-changes"></paper-icon-button>
+  </icon>
+  <name>{{trigger.name}}</name>
+  <description>{{trigger.description}}</description>
+  <extra></extra>
+  <modify>
+    <div layout vertical>
+      <h3>{{trigger.name}}</h3>
+      <paper-input label="{{'name' | translate }}" value="{{trigger.name}}" floatingLabel></paper-input>
+      <paper-input label="{{'description' | translate }}" value="{{trigger.description}}" floatingLabel></paper-input>
+      <paper-input label="{{'channel' | translate }}" value="{{trigger.channel}}" floatingLabel></paper-input>
     </div>
-  </div>
-</modify>
+  </modify>
 </fd-generic-item>
 </template>
   <script>
-    Polymer("fd-user", {
+    Polymer("fd-trigger", {
      /**
        * The 'guest' attribute tells whether the API call should be made as a guest user 
        *
@@ -114,10 +105,8 @@ Element providing proof of concept of a Thing card, with all needed features
        * @type boolean
        */
     mode: 'matCard',
-    guest: undefined,  
-    user: undefined
-    });
-
+    guest: undefined
+  });
   </script>
 
 </polymer-element>

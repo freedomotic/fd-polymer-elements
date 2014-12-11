@@ -4,7 +4,7 @@
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="fd-generic-list.html">
-<link rel="import" href="fd-polymer-thing.html">
+<link rel="import" href="fd-polymer-reaction.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -18,7 +18,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-things" attributes="ssl address port apiVersion guest mode">
+<polymer-element name="fd-reactions" attributes="ssl address port apiVersion guest mode">
 
   <template>
      <style>
@@ -31,17 +31,15 @@ Element providing proof of concept of a Thing card, with all needed features
     }
 
     </style>
-
-  <fd-generic-list items="{{objects}}" type="objects" wsType="objectchange">
-  <template repeat="{{object in objects}}">
-      <fd-thing object="{{object}}" style="padding:5px;" mode="{{mode}}" ></fd-thing>
+<fd-generic-list type="reactions" items="{{reactions}}" guest="{{guest}}">
+  <template repeat="{{reaction in reactions}}">
+      <fd-reaction reaction="{{reaction}}" style="padding:5px;" mode="{{mode}}" ></fd-reaction>
   </template>
   </fd-generic-list>
-    
-</template>
+ </template>
  
   <script>
-    Polymer("fd-things", {
+    Polymer("fd-reactions", {
      /**
        * The 'guest' attribute tells whether the API call should be made as a guest user 
        *
@@ -78,6 +76,7 @@ Element providing proof of concept of a Thing card, with all needed features
        */
     mode: 'list'
     });
+
   </script>
 
 </polymer-element>

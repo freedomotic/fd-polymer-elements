@@ -13,11 +13,10 @@ Element providing proof of concept of a Thing card, with all needed features
 
 ##### Example
 
-    <fd-thing  address="fritz.bestmazzo.it" port="9111" apiVersion="v3" 
-          thingUuid="76fd619c-617b-4fb7-9870-8f08164c4926" guest></fd-thing>
+    <fd-generic-item></fd-generic-item>
 
-@element fd-thing
-@blurb Element providing proof of concept of a Thing card, with all needed features
+@element fd-generic-item
+@blurb A generic element that encapsulates common logic for any type of item
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
@@ -60,7 +59,7 @@ Element providing proof of concept of a Thing card, with all needed features
     port="{{port}}" 
     apiVersion="{{apiVersion}}"
     wstype="{{wsType}}" 
-    on-message="{{ updateObject }}"
+    on-message="{{updateItem}}"
     auto="false">
   </fd-ws-service>     
 
@@ -127,10 +126,13 @@ Element providing proof of concept of a Thing card, with all needed features
         } 
       },
       startWS: function(){
-        this.$.wss.go();
+        if (!!this.wsType){
+          this.$.wss.go();
+        }
       },
       ready: function(){
         if (!!this.uuid ){
+          //console.log("fd-generic-item.uuid:" + this.uuid);
           this.$.itemData.auto=true;
           this.$.itemData.go();
         }

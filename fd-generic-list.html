@@ -1,11 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
+<link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
+<link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../core-icons/social-icons.html">
-
-<link rel="import" href="fd-generic-item.html">
-<link rel="import" href="fd-polymer-properties.html">
-<link rel="import" href="fd-polymer-tags.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -19,7 +16,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-user" attributes="ssl address port apiVersion user uuid guest mode">
+<polymer-element name="fd-generic-list" attributes="ssl address port apiVersion guest mode type wsType items">
 
   <template>
      <style>
@@ -30,60 +27,39 @@ Element providing proof of concept of a Thing card, with all needed features
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
-    paper-icon-button /deep/ core-icon[role=img] {
-      width: 85px;
-      height: 85px;
-      color: #333;
-    }
+
     </style>
-   <fd-api-settings
+      <fd-api-settings
     ssl="{{ssl}}" address="{{address}}" 
     port="{{port}}" apiVersion="{{apiVersion}}"
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
-  
-<fd-generic-item type="users" on-icon-tap="" mode="{{mode}}" item="{{user}}" guest="{{guest}}" uuid="{{uuid}}" >
-<icon>
-  <template if="{{!!user.properties.iconfile}}">
-    <paper-icon-button src="{{user.properties.iconfile | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
-  </template>
-  <template if="{{!!user.properties.iconurl}}">
-    <paper-icon-button src="{{user.properties.iconurl | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
-  </template>
-  <template if="{{!user.properties.iconfile && !user.properties.iconurl}}" >
-    <paper-icon-button icon="social:person"></paper-icon-button>
-  </template>
-</icon>
-<name>{{user.name}}</name>
-<description>{{user.properties.fullname}}</description>
-<extra></extra>
-<modify>
-  <div layout vertical>
-    <h3>{{user.name}}</h3>
-    <paper-input label="{{'name' | translate }}" value="{{user.properties.fullname}}" floatingLabel></paper-input>
-    <paper-input label="{{'email' | translate }}" value="{{user.properties.email}}"floatingLabel></paper-input>
-    <fd-properties properties="{{user.properties}}"></fd-properties>
-    <div>
-      {{'roles' | translate}}: 
-      <fd-tags tags="{{user.roles}}"></fd-tags>
-    </div>
-  </div>
-</modify>
-</fd-generic-item>
-</template>
+ <div layout horizontal wrap>
+  <fd-rest-service 
+    id="itemList"
+    fdtype="{{type}}" 
+    fditems="{{items}}"
+    on-rest-response="{{ startWS }}"
+    guest="{{guest}}">
+  </fd-rest-service>
+      <content></content>
+     <fd-ws-service 
+    id="wss"
+    wstype="{{wsType}}" 
+    on-message="{{ updateItem }}"
+    auto="false">
+ </fd-ws-service>     
+
+ </div>
+ </template>
+ 
   <script>
-    Polymer("fd-user", {
+    Polymer("fd-generic-list", {
      /**
        * The 'guest' attribute tells whether the API call should be made as a guest user 
        *
        * @attribute guest
        * @type boolean
-       */
-     /**
-       * The 'thingUuid' attribute specifies the uuid of Thing to show
-       *
-       * @attribute thingUuid
-       * @type string
        */
      /**
        * The 'address' attribute specifies the hostname or ip address of API service 
@@ -115,7 +91,19 @@ Element providing proof of concept of a Thing card, with all needed features
        */
     mode: 'matCard',
     guest: undefined,  
-    user: undefined
+    updateItem: function(event){
+        var data = JSON.parse(event.detail);
+        for (item in this.items){
+          if(data.uuid === this.items[item].uuid){
+            this.items[item] = data;
+          }
+        } 
+      },
+      startWS: function(){
+        if (!!this.wsType){
+          this.$.wss.go();
+        }
+      }
     });
 
   </script>

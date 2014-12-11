@@ -19,7 +19,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-user" attributes="ssl address port apiVersion user uuid guest mode">
+<polymer-element name="fd-reaction" attributes="ssl address port apiVersion reaction uuid guest mode">
 
   <template>
      <style>
@@ -42,37 +42,24 @@ Element providing proof of concept of a Thing card, with all needed features
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
   
-<fd-generic-item type="users" on-icon-tap="" mode="{{mode}}" item="{{user}}" guest="{{guest}}" uuid="{{uuid}}" >
+<fd-generic-item type="reactions" on-icon-tap="" mode="{{mode}}" item="{{reaction}}" guest="{{guest}}" uuid="{{uuid}}" >
 <icon>
-  <template if="{{!!user.properties.iconfile}}">
-    <paper-icon-button src="{{user.properties.iconfile | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
-  </template>
-  <template if="{{!!user.properties.iconurl}}">
-    <paper-icon-button src="{{user.properties.iconurl | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
-  </template>
-  <template if="{{!user.properties.iconfile && !user.properties.iconurl}}" >
-    <paper-icon-button icon="social:person"></paper-icon-button>
-  </template>
+  <paper-icon-button icon="gesture"></paper-icon-button>
 </icon>
-<name>{{user.name}}</name>
-<description>{{user.properties.fullname}}</description>
+<name>{{reaction.description}}</name>
+<description>{{reaction.shortDescription}}</description>
 <extra></extra>
 <modify>
   <div layout vertical>
-    <h3>{{user.name}}</h3>
-    <paper-input label="{{'name' | translate }}" value="{{user.properties.fullname}}" floatingLabel></paper-input>
-    <paper-input label="{{'email' | translate }}" value="{{user.properties.email}}"floatingLabel></paper-input>
-    <fd-properties properties="{{user.properties}}"></fd-properties>
-    <div>
-      {{'roles' | translate}}: 
-      <fd-tags tags="{{user.roles}}"></fd-tags>
-    </div>
+    <h3>{{reaction.description}}</h3>
+    <paper-input label="{{'name' | translate }}" value="{{reaction.description}}" floatingLabel></paper-input>
+    <paper-input label="{{'description' | translate }}" value="{{reaction.shortDescription}}"floatingLabel></paper-input>
   </div>
 </modify>
 </fd-generic-item>
 </template>
   <script>
-    Polymer("fd-user", {
+    Polymer("fd-reaction", {
      /**
        * The 'guest' attribute tells whether the API call should be made as a guest user 
        *
@@ -113,9 +100,7 @@ Element providing proof of concept of a Thing card, with all needed features
        * @attribute ssl
        * @type boolean
        */
-    mode: 'matCard',
-    guest: undefined,  
-    user: undefined
+    mode: 'matCard'
     });
 
   </script>

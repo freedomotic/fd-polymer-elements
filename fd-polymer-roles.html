@@ -3,6 +3,7 @@
 <link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
+<link rel="import" href="fd-generic-list.html">
 <link rel="import" href="fd-polymer-role.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
@@ -30,23 +31,11 @@ Element providing proof of concept of a Thing card, with all needed features
     }
 
     </style>
-      <fd-api-settings
-    ssl="{{ssl}}" address="{{address}}" 
-    port="{{port}}" apiVersion="{{apiVersion}}"
-    apiUrl="{{apiUrl}}">
-  </fd-api-settings>
- <div layout horizontal wrap>
-  <fd-rest-service 
-    id="itemList"
-    fdtype="system/roles" 
-    fditems="{{items}}"
-    guest="{{guest}}">
-  </fd-rest-service>
-
-  <template repeat="{{role in items}}">
-      <fd-role role="{{role}}" style="padding:5px;" mode="list" ></fd-role>
+<fd-generic-list type="system/roles" items="{{roles}}" guest="{{guest}}">
+  <template repeat="{{role in roles}}">
+      <fd-role role="{{role}}" style="padding:5px;" mode="{{mode}}" ></fd-role>
   </template>
- </div>
+  </fd-generic-list>
  </template>
  
   <script>
@@ -85,8 +74,7 @@ Element providing proof of concept of a Thing card, with all needed features
        * @attribute ssl
        * @type boolean
        */
-    mode: 'matCard',
-    guest: undefined
+    mode: 'list'
     });
 
   </script>

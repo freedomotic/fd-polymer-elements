@@ -71,10 +71,12 @@
 <script>
 	Polymer("fd-properties",{
     items: undefined,
-    updateItems: function(){
-    	this.items = Object.keys(this.properties);	
+    updateItems: function(){ 
+    	if (!!this.properties){
+    		this.items = Object.keys(this.properties);	
+    	}
     },
-    ready: function(){
+    propertiesChanged: function(){
     	this.updateItems();
     },
     // filter function to use in looping objects

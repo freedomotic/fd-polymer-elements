@@ -3,7 +3,8 @@
 <link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
-<<link rel="import" href="fd-polymer-plugin.html"> 
+<link rel="import" href="fd-generic-list.html">
+<link rel="import" href="fd-polymer-plugin.html"> 
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -30,33 +31,12 @@ Element providing proof of concept of a Thing card, with all needed features
     }
 
     </style>
-      <fd-api-settings
-    ssl="{{ssl}}" address="{{address}}" 
-    port="{{port}}" apiVersion="{{apiVersion}}"
-    apiUrl="{{apiUrl}}">
-  </fd-api-settings>
- <div layout horizontal wrap>
-  <fd-rest-service 
-    id="pluginList"
-    fdtype="plugins" 
-    fditems="{{plugins}}"
-    on-rest-response="{{ startWS }}"
-    guest="{{guest}}">
-  </fd-rest-service>
-
+<fd-generic-list type="plugins" wsType="pluginChange" items="{{plugins}}">
   <template repeat="{{plugin in plugins}}">
-      <fd-plugin plugin="{{plugin}}" style="padding:5px;" mode="list" ></fd-plugin> 
+      <fd-plugin plugin="{{plugin}}" style="padding:5px;" mode="{{mode}}" ></fd-plugin> 
   </template>
-     <fd-ws-service 
-    id="wss"
-    address="fritz.bestmazzo.it" 
-    port="9111" 
-    apiVersion="v3"
-    wstype="pluginchange" 
-    on-message="{{ updatePlugin }}"
-    auto="false">
- </fd-ws-service>     
-
+  </fd-generic-list>
+     
  </div>
  </template>
  
@@ -96,19 +76,7 @@ Element providing proof of concept of a Thing card, with all needed features
        * @attribute ssl
        * @type boolean
        */
-    mode: 'matCard',
-    guest: undefined,  
-    updatePlugin: function(event){
-        var data = JSON.parse(event.detail);
-        for (plugin in this.plugins){
-          if(data.uuid === this.plugins[plugin].uuid){
-            this.plugins[plugin] = data;
-          }
-        } 
-      },
-      startWS: function(){
-        this.$.wss.go();
-      }
+    mode: 'list'
     });
 
   </script>
