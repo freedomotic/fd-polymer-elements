@@ -1,12 +1,9 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
-<link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
-<link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../core-icons/social-icons.html">
-<link rel="import" href="../fd-polymer-card/fd-polymer-card.html">
 
+<link rel="import" href="fd-generic-item.html">
 <link rel="import" href="fd-polymer-properties.html">
 <link rel="import" href="fd-polymer-tags.html">
 <!--
@@ -39,21 +36,8 @@ Element providing proof of concept of a Thing card, with all needed features
       color: #333;
     }
     </style>
-  <fd-api-settings
-    ssl="{{ssl}}" address="{{address}}" 
-    port="{{port}}" apiVersion="{{apiVersion}}"
-    apiUrl="{{apiUrl}}">
-  </fd-api-settings>
 
-  <fd-rest-service 
-    id="itemData"
-    fdtype="system/roles/{{uuid}}" 
-    fditems="{{role}}"
-    guest="{{guest}}"
-    auto="false">
-  </fd-rest-service>    
-  
-<fd-card on-icon-tap="" on-save-item="{{ saveItem }}" mode="{{mode}}">
+<fd-generic-item item="{{role}}" uuid="{{uuid}}" guest="{{guest}}" mode="{{mode}}" type="system/roles">
 <icon>
     <paper-icon-button icon="social:people"></paper-icon-button>
 </icon>
@@ -61,13 +45,6 @@ Element providing proof of concept of a Thing card, with all needed features
 <description></description>
 <extra></extra>
 <modify>
-  <fd-rest-service 
-    id="userSave"
-    fdtype="users/{{user.uuid}}" 
-    guest="{{guest}}"
-    auto="false"
-    method="PUT">
-  </fd-rest-service>   
   <div layout vertical>
     <h3>{{role.name}}</h3>
     <div>
@@ -76,7 +53,7 @@ Element providing proof of concept of a Thing card, with all needed features
     </div>
   </div>
 </modify>
-</fd-card>
+</fd-generic-item>
 </template>
   <script>
     Polymer("fd-role", {
@@ -122,18 +99,7 @@ Element providing proof of concept of a Thing card, with all needed features
        */
     mode: 'matCard',
     guest: undefined,  
-    role: undefined,
-    uuid: undefined,
-    ready: function(){
-        if (!!this.Uuid ){
-          this.$.itemData.auto=true;
-          this.$.itemData.go();
-        }
-      },
-      saveItem: function(){
-        this.$.itemSave.body = JSON.stringify(this.role);
-        this.$.itemSave.go();
-      }
+    role: undefined
     });
 
   </script>

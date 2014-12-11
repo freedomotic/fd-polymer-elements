@@ -1,13 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../fd-polymer-rest-service/fd-polymer-rest-service.html">
-<link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
 <link rel="import" href="../paper-slider/paper-slider.html">
 <link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../fd-polymer-card/fd-polymer-card.html">
+
+<link rel="import" href="../fd-generic-item.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -36,21 +36,11 @@ Element providing proof of concept of a Thing card, with all needed features
       height: 85px;
     }
     </style>
-  <fd-api-settings
+    <fd-api-settings
     ssl="{{ssl}}" address="{{address}}" 
     port="{{port}}" apiVersion="{{apiVersion}}"
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
-
-  <fd-rest-service 
-    id="pluginData"
-    fdtype="plugins/{{uuid}}" 
-    fditems="{{plugin}}"
-    on-rest-response="{{startWS}}"
-    guest="{{guest}}"
-    auto="false">
-  </fd-rest-service>    
-  
   <fd-rest-service 
     id="pluginClick"
     fdtype="plugins/{{plugin.uuid}}/{{action}}" 
@@ -58,20 +48,10 @@ Element providing proof of concept of a Thing card, with all needed features
     guest="{{guest}}">
   </fd-rest-service>
 
-  <fd-ws-service 
-    id="wss"
-    ssl="{{ssl}}"
-    address="{{address}}" 
-    port="{{port}}" 
-    apiVersion="{{apiVersion}}"
-    wstype="pluginchange" 
-    on-message="{{ updatePlugin }}"
-    auto="false">
-  </fd-ws-service>     
 
-<fd-card on-icon-tap="{{ tapPlugin }}" mode="{{mode}}">
+<fd-generic-item on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="plugins" item="{{plugin}}" guest="{{guest}}" uuid="{{uuid}}" wsType="pluginchange" >
 <icon>
-  <paper-icon-button src="{{pluginIcon | asFreedomoticResource(apiUrl, 'plugin-' + plugin.currentPluginStatus + '.png') }}" >
+  <paper-icon-button src="{{ plugin.uuid + '-' + plugin.currentPluginStatus + '.png' | asFreedomoticResource(apiUrl, 'plugin-' + plugin.currentPluginStatus + '.png') }}" >
   </paper-icon-button>
 </icon>
 <name>{{plugin.pluginName}}</name>
@@ -80,22 +60,15 @@ Element providing proof of concept of a Thing card, with all needed features
   
 </extra>
 <modify>
-  <fd-rest-service 
-    id="pluginSave"
-    fdtype="plugins/{{plugin.uuid}}/config" 
-    guest="{{guest}}"
-    auto="false"
-    method="PUT">
-  </fd-rest-service>   
 <div layout vertical>
 <h3>{{plugin.pluginName}}</h3>
-<paper-input label="{{'name' | translate) }}" value="{{plugin.pluginName}}" floatingLabel></paper-input>
+<paper-input label="{{'name' | translate }}" value="{{plugin.pluginName}}" floatingLabel></paper-input>
 <paper-input label="{{'description' | translate }}" value="{{plugin.description}}" floatingLabel></paper-input>
 <paper-input label="{{'category' | translate }}" value="{{plugin.category}}"floatingLabel></paper-input>
 <paper-input label="{{'address' | translate }}" value="{{plugin.phisicalAddress}}" floatingLabel></paper-input>
 </div>
 </modify>
-</fd-card>
+</fd-generic-item>
 </template>
   <script>
     Polymer("fd-plugin", {
@@ -141,9 +114,7 @@ Element providing proof of concept of a Thing card, with all needed features
        */
     mode: 'matCard',
     guest: undefined,  
-    pluginIcon: undefined,
     plugin: undefined,
-    uuid: undefined,
     tapPlugin: function(){
       if (this.plugin.currentpluginstatus != "RUNNING"){
         this.action = "start";  
@@ -151,31 +122,7 @@ Element providing proof of concept of a Thing card, with all needed features
         this.action = "stop";  
       }
       this.$.pluginClick.go();
-    },
-    pluginChanged: function(){
-      if (!!this.plugin){
-        this.pluginIcon = this.plugin.uuid + "-" + this.plugin.currentPluginStatus + ".png";
-      }
-    },
-    updatePlugin: function(event){
-        var data = JSON.parse(event.detail);
-        if(data.uuid === this.plugin.uuid){
-          this.plugin = data;
-        } 
-      },
-      startWS: function(){
-        this.$.wss.go();
-      },
-      ready: function(){
-        if (!!this.uuid ){
-          this.$.pluginData.auto=true;
-          this.$.pluginData.go();
-        }
-      },
-      saveObject: function(){
-        this.$.pluginSave.body = JSON.stringify(this.plugin.configuration);
-        this.$.pluginSave.go();
-      }
+    }
     });
 
   </script>
