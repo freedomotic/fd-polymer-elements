@@ -3,7 +3,7 @@
 <link rel="import" href="../fd-polymer-ws-service/fd-polymer-ws-service.html">
 <link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
-<link rel="import" href="fd-generic-list.html">
+<link rel="import" href="../fd-polymer-generics/fd-generic-list.html">
 <link rel="import" href="fd-polymer-command.html"> 
 <!--
 Element providing proof of concept of a Thing card, with all needed features
@@ -31,7 +31,7 @@ Element providing proof of concept of a Thing card, with all needed features
     }
 
     </style>
-<fd-generic-list type="commands/user" items="{{commands}}">
+<fd-generic-list type="commands/user" items="{{commands}}" guest="{{guest}}">
   <template repeat="{{command in commands}}">
       <fd-command command="{{command}}" style="padding:5px;" mode="{{mode}}" ></fd-command> 
   </template>

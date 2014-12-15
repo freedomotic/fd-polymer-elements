@@ -1,7 +1,7 @@
-fd-polymer-thing
+fd-polymer-elements
 ================
 
-See the [component page](http://bestmazzo.github.io/fd-polymer-thing) for more information.
+See the [component page](http://freedomotic.github.io/fd-polymer-elements) for more information.
 
 ## Getting Started
 
