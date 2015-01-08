@@ -32,7 +32,7 @@ Element providing proof of concept of a Thing card, with all needed features
 
     </style>
 
-  <fd-generic-list items="{{objects}}" type="objects" wsType="objectchange" guest="{{guest}}">
+  <fd-generic-list items="{{objects}}" type="things" wsType="objectchange" guest="{{guest}}">
   <template repeat="{{object in objects}}">
       <fd-thing object="{{object}}" style="padding:5px;" mode="{{mode}}" ></fd-thing>
   </template>

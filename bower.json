@@ -1,6 +1,6 @@
 {
   "name": "fd-polymer-elements",
-  "version": "0.8.4",
+  "version": "0.8.6",
   "keywords": [
     "freedomotic",
     "seed",
@@ -39,6 +39,7 @@
   "resolutions": {
     "polymer": "^0.5.2",
     "core-component-page": "^0.5.0",
-    "platform": "~0.2.0"
+    "platform": "~0.2.0",
+    "fd-polymer-api-settings": "~0.2.0"
   }
 }

@@ -45,7 +45,7 @@ Element providing proof of concept of a Thing card, with all needed features
 
   <fd-rest-service 
     id="objectClick"
-    fdtype="objects/{{object.uuid}}/click" 
+    fdtype="things/{{object.uuid}}/click" 
     auto="false" method="POST"
     guest="{{guest}}">
   </fd-rest-service>
@@ -56,7 +56,7 @@ Element providing proof of concept of a Thing card, with all needed features
     guest="{{guest}}">
   </fd-rest-service>  
 
-<fd-generic-item on-icon-tap="{{tapObject}}" mode="{{mode}}" guest="{{guest}}" item="{{object}}" uuid="{{uuid}}" type="objects" wsType="objectchange">
+<fd-generic-item on-icon-tap="{{tapObject}}" mode="{{mode}}" guest="{{guest}}" item="{{object}}" uuid="{{uuid}}" type="things" wsType="objectchange">
 <icon>
   <paper-icon-button src="{{objectIcon | asFreedomoticResource(apiUrl) }}" on-tap="{{tapObject}}" >
   </paper-icon-button>
@@ -144,7 +144,7 @@ Element providing proof of concept of a Thing card, with all needed features
     onBehaviorChange: function(evt, t,d){
       for (behavior in this.object.behaviors){
         if (this.object.behaviors[behavior].name === d.id){
-            this.$.objectBehaviorChange.fdtype="objects/" + this.object.uuid + 
+            this.$.objectBehaviorChange.fdtype="things/" + this.object.uuid + 
               "/behaviorchange/"+ this.object.behaviors[behavior].name + "/" + this.object.behaviors[behavior].value;
             console.log(this.$.objectBehaviorChange.fdtype);
             this.$.objectBehaviorChange.go();
