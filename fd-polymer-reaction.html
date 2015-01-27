@@ -2,7 +2,7 @@
 <link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../core-icons/social-icons.html">
-
+<link rel="import" href="../fd-polymer-ispermitted/fd-polymer-ispermitted.html">
 <link rel="import" href="../fd-polymer-generics/fd-generic-item.html">
 <link rel="import" href="fd-polymer-properties.html">
 <link rel="import" href="fd-polymer-tags.html">
@@ -30,7 +30,7 @@ Element providing proof of concept of a Thing card, with all needed features
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
-    paper-icon-button /deep/ core-icon[role=img] {
+    paper-icon-button::shadow core-icon[role=img] {
       width: 85px;
       height: 85px;
       color: #333;
@@ -41,8 +41,9 @@ Element providing proof of concept of a Thing card, with all needed features
     port="{{port}}" apiVersion="{{apiVersion}}"
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
-  
-<fd-generic-item type="reactions" on-icon-tap="" mode="{{mode}}" item="{{reaction}}" guest="{{guest}}" uuid="{{uuid}}" >
+
+<fd-ispermitted permission="reactions:update" allowed="{{canUpdate}}"></fd-ispermitted>  
+<fd-generic-item type="reactions" on-icon-tap="" mode="{{mode}}" item="{{reaction}}" guest="{{guest}}" uuid="{{uuid}}" ensettings="{{canUpdate}}">
 <icon>
   <paper-icon-button icon="gesture"></paper-icon-button>
 </icon>

@@ -9,6 +9,7 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../fd-polymer-generics/fd-generic-item.html">
 <link rel="import" href="fd-polymer-properties.html">
+<link rel="import" href="../fd-polymer-ispermitted/fd-polymer-ispermitted.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
 
@@ -33,7 +34,7 @@ Element providing proof of concept of a Thing card, with all needed features
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
-    paper-icon-button /deep/ core-icon[role=img] {
+    paper-icon-button::shadow core-icon[role=img] {
       width: 85px;
       height: 85px;
     }
@@ -44,8 +45,8 @@ Element providing proof of concept of a Thing card, with all needed features
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
 
-
-<fd-generic-item on-icon-tap="" mode="{{mode}}" guest="{{guest}}" item="{{trigger}}" uuid="{{uuid}}" type="triggers">
+<fd-ispermitted permission="triggers:update" allowed="{{canUpdate}}"></fd-ispermitted>
+<fd-generic-item on-icon-tap="" mode="{{mode}}" guest="{{guest}}" ensettings="{{canUpdate}}" item="{{trigger}}" uuid="{{uuid}}" type="triggers">
   <icon>
     <paper-icon-button icon="track-changes"></paper-icon-button>
   </icon>
