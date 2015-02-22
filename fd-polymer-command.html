@@ -34,11 +34,6 @@ Element providing proof of concept of a Thing card, with all needed features
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
-    paper-icon-button::shadow core-icon[role=img] {
-      width: 85px;
-      height: 85px;
-      color: white;
-    }
     </style>
   <fd-api-settings
     ssl="{{ssl}}" address="{{address}}" 
@@ -69,7 +64,7 @@ Element providing proof of concept of a Thing card, with all needed features
 <paper-input label="{{'name' | translate }}" value="{{command.name}}" floatingLabel></paper-input>
 <paper-input label="{{'description' | translate }}" value="{{command.description}}" floatingLabel></paper-input>
 <paper-input label="{{'receiver' | translate }}" value="{{command.receiver}}" floatingLabel></paper-input>
-<fd-properties properties="{{command.properties.properties}}"></fd-properties>
+<fd-properties properties="{{command.props.props}}"></fd-properties>
 </div>
 </modify>
 </fd-generic-item>

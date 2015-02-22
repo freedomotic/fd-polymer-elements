@@ -31,10 +31,7 @@ Element providing proof of concept of a Thing card, with all needed features
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
-    paper-icon-button::shadow core-icon[role=img] {
-      width: 85px;
-      height: 85px;
-    }
+
     </style>
     <fd-api-settings
     ssl="{{ssl}}" address="{{address}}" 
@@ -49,7 +46,7 @@ Element providing proof of concept of a Thing card, with all needed features
   </fd-rest-service>
 
 <fd-ispermitted permission="sys:plugins:update" allowed="{{canUpdate}}"></fd-ispermitted>
-<fd-generic-item on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="plugins" ensettings="{{canUpdate}}" item="{{plugin}}" guest="{{guest}}" uuid="{{uuid}}" wsType="pluginchange" >
+<fd-generic-item on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="plugins" enextra="false" ensettings="{{canUpdate}}" item="{{plugin}}" guest="{{guest}}" uuid="{{uuid}}" wsType="pluginchange" >
 <icon>
   <paper-icon-button src="{{ plugin.uuid + '-' + plugin.currentPluginStatus + '.png' | asFreedomoticResource(apiUrl, 'plugin-' + plugin.currentPluginStatus + '.png') }}" >
   </paper-icon-button>
@@ -62,7 +59,7 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
 <div layout vertical>
 <h3>{{plugin.pluginName}}</h3>
-<paper-input label="{{'name' | translate }}" value="{{plugin.pluginName}}" floatingLabel></paper-input>
+<paper-input label="{{'name' | translate }}" value="{{plugin.name}}" floatingLabel></paper-input>
 <paper-input label="{{'description' | translate }}" value="{{plugin.description}}" floatingLabel></paper-input>
 <paper-input label="{{'category' | translate }}" value="{{plugin.category}}"floatingLabel></paper-input>
 <paper-input label="{{'address' | translate }}" value="{{plugin.phisicalAddress}}" floatingLabel></paper-input>

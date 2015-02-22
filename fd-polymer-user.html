@@ -31,8 +31,6 @@ Element providing proof of concept of a Thing card, with all needed features
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
     paper-icon-button::shadow core-icon[role=img] {
-      width: 85px;
-      height: 85px;
       color: #333;
     }
     </style>
@@ -45,12 +43,12 @@ Element providing proof of concept of a Thing card, with all needed features
 <fd-generic-item type="users" on-icon-tap="" ensettings="{{canUpdate}}" mode="{{mode}}" item="{{user}}" guest="{{guest}}" uuid="{{uuid}}" >
 <icon>
   <template if="{{!!user.properties.iconfile}}">
-    <paper-icon-button src="{{user.properties.iconfile | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
+    <paper-icon-button src="{{user.props.iconfile | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
   </template>
   <template if="{{!!user.properties.iconurl}}">
-    <paper-icon-button src="{{user.properties.iconurl | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
+    <paper-icon-button src="{{user.props.iconurl | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
   </template>
-  <template if="{{!user.properties.iconfile && !user.properties.iconurl}}" >
+  <template if="{{!user.props.iconfile && !user.props.iconurl}}" >
     <paper-icon-button icon="social:person"></paper-icon-button>
   </template>
 </icon>
@@ -60,9 +58,9 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
   <div layout vertical>
     <h3>{{user.name}}</h3>
-    <paper-input label="{{'name' | translate }}" value="{{user.properties.fullname}}" floatingLabel></paper-input>
-    <paper-input label="{{'email' | translate }}" value="{{user.properties.email}}"floatingLabel></paper-input>
-    <fd-properties properties="{{user.properties}}"></fd-properties>
+    <paper-input label="{{'name' | translate }}" value="{{user.props.fullname}}" floatingLabel></paper-input>
+    <paper-input label="{{'email' | translate }}" value="{{user.props.email}}"floatingLabel></paper-input>
+    <fd-properties properties="{{user.props}}"></fd-properties>
     <div>
       {{'roles' | translate}}: 
       <fd-tags tags="{{user.roles}}"></fd-tags>

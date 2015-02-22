@@ -3,7 +3,7 @@
 <link rel="import" href="../core-icon/core-icon.html">
 <link rel="import" href="../core-icons/core-icons.html">
 
-<polymer-element name="fd-properties" attributes="properties">
+<polymer-element name="fd-properties" attributes="props">
 <template>
 	<style>
 
@@ -43,7 +43,7 @@
 			<div class="fd-prop-value">
 				<input id="{{item}}" 
 					type="text" class="fd-prop-value" 
-					value="{{properties[item]}}" size="{{properties[item].length}}" 
+					value="{{props[item]}}" size="{{props[item].length}}" 
 					on-blur="{{updatePropValue}}">
 				</input>
 			</div>
@@ -72,28 +72,28 @@
 	Polymer("fd-properties",{
     items: undefined,
     updateItems: function(){ 
-    	if (!!this.properties){
-    		this.items = Object.keys(this.properties);	
+    	if (!!this.props){
+    		this.items = Object.keys(this.props);	
     	}
     },
-    propertiesChanged: function(){
+    propsChanged: function(){
     	this.updateItems();
     },
     // filter function to use in looping objects
   	delProp: function(e,d,t){
      	toBeRemoved=t.attributes['data'].value;
-     	delete this.properties[toBeRemoved];
+     	delete this.props[toBeRemoved];
      	this.updateItems();
   	},
   	addProp: function(){
-  		this.properties[this.$.newPropName.value] = this.$.newPropValue.value;
+  		this.props[this.$.newPropName.value] = this.$.newPropValue.value;
 	  	this.updateItems();
 	  	this.$.newPropName.value = "";
 	  	this.$.newPropValue.value = "";
   	},
   	updatePropValue: function(e,d,target){
 		var id = target.attributes['id'].value;
-		this.properties[id].value=target.value;
+		this.props[id].value=target.value;
   	}
 });
 </script>

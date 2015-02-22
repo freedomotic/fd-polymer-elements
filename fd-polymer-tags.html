@@ -44,7 +44,7 @@
 	Polymer("fd-tags",{
  
 	delTag: function(e, d ,target){
-		toBeRemoved = target.attributes['data'].value;
+		var toBeRemoved = target.attributes['data'].value;
 		var i = this.tags.indexOf(toBeRemoved);
 		if(i != -1) {
 			this.tags.splice(i, 1);

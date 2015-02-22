@@ -18,7 +18,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-things" attributes="ssl address port apiVersion guest mode">
+<polymer-element name="fd-things" attributes="ssl address port apiVersion guest mode enAdd">
 
   <template>
      <style>
@@ -32,7 +32,7 @@ Element providing proof of concept of a Thing card, with all needed features
 
     </style>
 
-  <fd-generic-list items="{{objects}}" type="things" wsType="objectchange" guest="{{guest}}">
+  <fd-generic-list items="{{objects}}" type="things" wsType="objectchange" guest="{{guest}}" mode="{{mode}}" enAdd="{{enAdd}}">
   <template repeat="{{object in objects}}">
       <fd-thing object="{{object}}" style="padding:5px;" mode="{{mode}}" ></fd-thing>
   </template>

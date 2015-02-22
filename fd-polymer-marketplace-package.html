@@ -48,7 +48,7 @@ Element providing proof of concept of a Thing card, with all needed features
         <fd-rest-service id="installPluginService" auto="false" method="POST" on-rest-response="{{started}}" toast="{{toast}}">
         </fd-rest-service>
 
-        <fd-generic-item ensettings="false" on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="marketplace/plugins" item="{{package}}" guest="{{guest}}" uuid="{{uuid}}">
+        <fd-generic-item ensettings="false" enextra="false" on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="marketplace/plugins" item="{{package}}" guest="{{guest}}" uuid="{{uuid}}">
             <icon>
                 <paper-icon-button src="{{package.field_icon[0].filepath}}">
                 </paper-icon-button>

@@ -4,7 +4,6 @@
 <link rel="import" href="../core-icons/social-icons.html">
 <link rel="import" href="../fd-polymer-ispermitted/fd-polymer-ispermitted.html">
 <link rel="import" href="../fd-polymer-generics/fd-generic-item.html">
-<link rel="import" href="fd-polymer-properties.html">
 <link rel="import" href="fd-polymer-tags.html">
 <!--
 Element providing proof of concept of a Thing card, with all needed features
@@ -19,7 +18,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-role" attributes="ssl address port apiVersion role uuid guest mode">
+<polymer-element name="fd-role" attributes="role uuid guest mode">
 
   <template>
      <style>
@@ -31,8 +30,6 @@ Element providing proof of concept of a Thing card, with all needed features
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
     paper-icon-button::shadow core-icon[role=img] {
-      width: 85px;
-      height: 85px;
       color: #333;
     }
     </style>
