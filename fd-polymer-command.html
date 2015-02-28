@@ -61,9 +61,9 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
 <div layout vertical>
 <h3>{{command.name}}</h3>
-<paper-input label="{{'name' | translate }}" value="{{command.name}}" floatingLabel></paper-input>
-<paper-input label="{{'description' | translate }}" value="{{command.description}}" floatingLabel></paper-input>
-<paper-input label="{{'receiver' | translate }}" value="{{command.receiver}}" floatingLabel></paper-input>
+<paper-input label="{{'name' | t }}" value="{{command.name}}" floatingLabel></paper-input>
+<paper-input label="{{'description' | t }}" value="{{command.description}}" floatingLabel></paper-input>
+<paper-input label="{{'receiver' | t }}" value="{{command.receiver}}" floatingLabel></paper-input>
 <fd-properties properties="{{command.props.props}}"></fd-properties>
 </div>
 </modify>

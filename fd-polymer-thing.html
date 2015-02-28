@@ -64,7 +64,7 @@ Element providing proof of concept of a Thing card, with all needed features
 <extra>
   <template repeat="{{behavior in object.behaviors}}">
     <div layout horizontal self-stretch >
-    <div layout style="padding-right:5px;height:32px;">{{behavior.name | translate(apiUrl)}}</div>
+    <div layout style="padding-right:5px;height:32px;">{{behavior.name | t(apiUrl)}}</div>
     <template if="{{behavior['@class']=='com.freedomotic.model.object.RangedIntBehavior'}}" >
       <paper-slider flex style="width:100%;" id="{{behavior.name}}" layout value="{{behavior.value}}" min="{{behavior.min}}" max="{{behavior.max}}" pin on-change="{{onBehaviorChange}}"></paper-slider>
     </template>
@@ -77,10 +77,10 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
 <div layout vertical>
 <h3>{{object.name}}</h3>
-<paper-input label="{{'name' | translate(apiUrl) }}" value="{{object.name}}" floatingLabel></paper-input>
-<paper-input label="{{'description' | translate(apiUrl) }}" value="{{object.description}}" floatingLabel></paper-input>
-<paper-input label="{{'protocol' | translate(apiUrl) }}" value="{{object.protocol}}"floatingLabel></paper-input>
-<paper-input label="{{'address' | translate(apiUrl) }}" value="{{object.phisicalAddress}}" floatingLabel></paper-input>
+<paper-input label="{{'name' | t(apiUrl) }}" value="{{object.name}}" floatingLabel></paper-input>
+<paper-input label="{{'description' | t(apiUrl) }}" value="{{object.description}}" floatingLabel></paper-input>
+<paper-input label="{{'protocol' | t(apiUrl) }}" value="{{object.protocol}}"floatingLabel></paper-input>
+<paper-input label="{{'address' | t(apiUrl) }}" value="{{object.phisicalAddress}}" floatingLabel></paper-input>
 </div>
 </modify>
 </fd-generic-item>

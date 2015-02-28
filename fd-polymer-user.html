@@ -58,8 +58,8 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
   <div layout vertical>
     <h3>{{user.name}}</h3>
-    <paper-input label="{{'name' | translate }}" value="{{user.props.fullname}}" floatingLabel></paper-input>
-    <paper-input label="{{'email' | translate }}" value="{{user.props.email}}"floatingLabel></paper-input>
+    <paper-input label="{{'name' | t }}" value="{{user.props.fullname}}" floatingLabel></paper-input>
+    <paper-input label="{{'email' | t }}" value="{{user.props.email}}"floatingLabel></paper-input>
     <fd-properties properties="{{user.props}}"></fd-properties>
     <div>
       {{'roles' | translate}}: 
