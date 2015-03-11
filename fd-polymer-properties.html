@@ -35,13 +35,13 @@
 		}
 	</style>
 	<div layout vertical right>
-		<div >{{'properties' | translate}}:</div>
+		<div >{{'properties' | t}}:</div>
 		<template repeat="{{item in items}}">
 		<div layout horizontal left>
-			<div class="fd-prop-name">{{item}}</div>
+			<div class="fd-prop-name">{{item | t}}</div>
 			 =
 			<div class="fd-prop-value">
-				<input id="{{item}}" 
+				<input id="{{item}}"
 					type="text" class="fd-prop-value" 
 					value="{{props[item]}}" size="{{props[item].length}}" 
 					on-blur="{{updatePropValue}}">

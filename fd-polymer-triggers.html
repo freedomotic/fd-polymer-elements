@@ -19,7 +19,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-triggers" attributes="ssl address port apiVersion guest mode">
+<polymer-element name="fd-triggers" attributes="ssl address port apiVersion guest mode txtFilter enAdd">
 
     <template>
         <style>
@@ -34,12 +34,11 @@ Element providing proof of concept of a Thing card, with all needed features
                 height: 100%;
             }
         </style>
-        <fd-generic-list type="triggers" items="{{triggers}}" guest="{{guest}}" fit>
-            <core-list grid width="260" data="{{triggers}}" fit>
-                <template>
-                    <fd-trigger trigger="{{model}}" style="padding:5px;" mode="{{mode}}"></fd-trigger>
+        <fd-generic-list type="triggers" items="{{triggers}}" guest="{{guest}}" fit txtFilter="{{txtFilter}}" on-click-add="{{toggleAdd}}" enAdd="{{enAdd}}" mode="{{mode}}" >
+                <template repeat="{{trigger in triggers}}">
+                    <fd-trigger trigger="{{model}}" style="padding:5px;" mode="{{mode}}" enCopy="{{enCopy}}"></fd-trigger>
                 </template>
-            </core-list>
+            
         </fd-generic-list>
 
     </template>
@@ -80,7 +79,11 @@ Element providing proof of concept of a Thing card, with all needed features
              * @attribute ssl
              * @type boolean
              */
-            mode: 'list'
+            mode: 'list',
+            enCopy: false,
+            toggleAdd: function(){
+                this.enCopy = ! this.enCopy;
+            }
         });
     </script>
 

@@ -1,6 +1,6 @@
 {
   "name": "fd-polymer-elements",
-  "version": "0.10.3",
+  "version": "0.11.0",
   "keywords": [
     "freedomotic",
     "seed",
@@ -14,9 +14,8 @@
     "paper-elements": "polymer/paper-elements#~0.5.5",
     "fd-polymer-rest-service": "~0.2.6",
     "fd-polymer-i18next-translate": "~0.2.4",
-    "fd-polymer-card": "~0.5.5",
     "polymer-gestures": "polymer/polymer-gestures#~0.5.5",
-    "fd-polymer-generics": "~0.2.2"
+    "fd-polymer-generics": "~0.2.8"
   },
   "devDependencies": {
     "polymer-test-tools": "Polymer/polymer-test-tools#^0.5.5"
@@ -39,7 +38,10 @@
   "resolutions": {
     "core-component-page": "^0.5",
     "polymer": "^0.5.5",
-    "fd-polymer-card": "~0.5.5",
+    "fd-polymer-card": "~0.5.8",
+    "fd-polymer-api-settings": "^0.2.2",
+    "fd-polymer-ispermitted": "^0.2.0",
+    "fd-polymer-ws-service": "^0.2.0",
     "platform": "^0.4.0"
   }
 }

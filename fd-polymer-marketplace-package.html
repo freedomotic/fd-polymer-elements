@@ -21,7 +21,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-marketplace-package" attributes="ssl address port apiVersion package uuid guest mode bound">
+<polymer-element name="fd-marketplace-package" attributes="ssl address port apiVersion package uuid guest mode">
     <template>
         <style>
             :host {
@@ -31,16 +31,8 @@ Element providing proof of concept of a Thing card, with all needed features
                 font-weight: 300;
                 font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
             }
-            paper-icon-button::shadow core-icon[role=img] {
-                width: 85px;
-                height: 85px;
-            }
-            paper-icon-button.mini::shadow core-icon[role=img] {
-                width: 20px;
-                height: 20px;
-            }
-            paper-icon-button.mini:hover {
-                color: #8bae2d;
+            .mini::shadow core-icon[role=img] {
+                padding: 0px;
             }
         </style>
         <fd-api-settings ssl="{{ssl}}" address="{{address}}" port="{{port}}" apiVersion="{{apiVersion}}" apiUrl="{{apiUrl}}">
@@ -48,16 +40,17 @@ Element providing proof of concept of a Thing card, with all needed features
         <fd-rest-service id="installPluginService" auto="false" method="POST" on-rest-response="{{started}}" toast="{{toast}}">
         </fd-rest-service>
 
-        <fd-generic-item ensettings="false" enextra="false" on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="marketplace/plugins" item="{{package}}" guest="{{guest}}" uuid="{{uuid}}">
+        <fd-generic-item enextra="true" endelete="false" ensettings="false" on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="marketplace/plugins" item="{{package}}" guest="{{guest}}" uuid="{{uuid}}">
             <icon>
                 <paper-icon-button src="{{package.field_icon[0].filepath}}">
                 </paper-icon-button>
             </icon>
             <name>{{package.title}}</name>
-            <description>{{package.field_description[0].value}}</description>
+            <description id="desc"></description>
             <extra>
+                
                 Website:
-                <a href="{{plugin.uri}}">
+                <a target="_blank" href="{{package.uri}}">
                     <paper-icon-button class="mini" icon="launch"></paper-icon-button>
                 </a>
                 <div>Status: {{package.field_status[0].value}}</div>
@@ -121,7 +114,7 @@ Element providing proof of concept of a Thing card, with all needed features
             extractFile: function() {
                 var filePath;
                 for (var id in this.package.field_file) {
-                    if (this.package.field_file[id].filename.indexOf("5.6") > -1) {
+                    if (this.package.field_file[id] && this.package.field_file[id].filename.indexOf("5.6") > -1) {
                         filePath = this.package.field_file[id].filepath;
                         break;
                     }
@@ -135,8 +128,13 @@ Element providing proof of concept of a Thing card, with all needed features
                     this.$.installPluginService.go();
                 }
             },
-            packageChanged: function() {
+            packageChanged: function(oldval, newval) {
                 //   console.log("PACKAGE: ",this.package);
+                var description = document.createTextNode(newval.field_description[0].value);
+                this.$.desc.appendChild(description);
+            },
+            tapPlugin: function(){
+                // start or stop a plugin 
             }
         });
     </script>

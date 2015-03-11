@@ -20,7 +20,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-users" attributes="ssl address port apiVersion guest mode txtfilter">
+<polymer-element name="fd-users" attributes="ssl address port apiVersion guest mode txtFilter enAdd ">
 
     <template>
         <style>
@@ -32,9 +32,9 @@ Element providing proof of concept of a Thing card, with all needed features
                 font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
             }
         </style>
-        <fd-generic-list type="users" items="{{users}}" guest="{{guest}}" filter="{{filter}}">
+        <fd-generic-list type="users" items="{{users}}" guest="{{guest}}" txtFilter="{{txtFilter}}" on-click-add="{{toggleAdd}}" enAdd="{{enAdd}}" mode="{{mode}}">
             <template repeat="{{user in users}}">
-                <fd-user user="{{user}}" style="padding:5px;" mode="{{mode}}"></fd-user>
+                <fd-user user="{{user}}" style="padding:5px;" mode="{{mode}}" encopy="{{enCopy}}"></fd-user>
             </template>
         </fd-generic-list>
 
@@ -77,7 +77,11 @@ Element providing proof of concept of a Thing card, with all needed features
              * @attribute ssl
              * @type boolean
              */
-            mode: 'list'
+            mode: 'list',
+            enCopy: false,
+            toggleAdd: function(){
+                this.enCopy = ! this.enCopy;
+            }
         });
     </script>
 

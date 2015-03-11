@@ -18,7 +18,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-reactions" attributes="ssl address port apiVersion guest mode">
+<polymer-element name="fd-reactions" attributes="ssl address port apiVersion guest mode txtFilter">
 
   <template>
      <style>
@@ -31,7 +31,7 @@ Element providing proof of concept of a Thing card, with all needed features
     }
 
     </style>
-<fd-generic-list type="reactions" items="{{reactions}}" guest="{{guest}}">
+<fd-generic-list type="reactions" items="{{reactions}}" guest="{{guest}}" txtFilter="{{txtFilter}}">
   <template repeat="{{reaction in reactions}}">
       <fd-reaction reaction="{{reaction}}" style="padding:5px;" mode="{{mode}}" ></fd-reaction>
   </template>

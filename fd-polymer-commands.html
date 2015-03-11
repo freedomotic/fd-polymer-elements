@@ -19,7 +19,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-commands" attributes="ssl address port apiVersion guest mode">
+<polymer-element name="fd-commands" attributes="ssl address port apiVersion guest mode txtFilter enAdd">
 
     <template>
         <style>
@@ -31,12 +31,12 @@ Element providing proof of concept of a Thing card, with all needed features
                 font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
             }
         </style>
-        <fd-generic-list type="commands/user" items="{{commands}}" guest="{{guest}}" fit>
-            <core-list grid width="260" data="{{commands}}" fit>
-                <template>
-                    <fd-command command="{{model}}" style="padding:5px;" mode="{{mode}}"></fd-command>
+        <fd-generic-list type="commands/user" items="{{commands}}" guest="{{guest}}" fit txtFilter="{{txtFilter}}" enAdd="{{enAdd}}" on-click-add="{{toggleAdd}}" mode="{{mode}}" >
+            
+                <template repeat="{{command in commands}}">
+                    <fd-command command="{{command}}" style="padding:5px;" mode="{{mode}}" enCopy="{{enCopy}}"></fd-command>
                 </template>
-            </core-list>
+            
         </fd-generic-list>
     </template>
 
@@ -76,7 +76,11 @@ Element providing proof of concept of a Thing card, with all needed features
              * @attribute ssl
              * @type boolean
              */
-            mode: 'list'
+            mode: 'list',
+            enCopy: false,
+            toggleAdd: function() {
+                this.enCopy = !this.enCopy;
+            }
         });
     </script>
 

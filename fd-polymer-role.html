@@ -18,7 +18,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-role" attributes="role uuid guest mode">
+<polymer-element name="fd-role" attributes="role uuid guest mode encopy">
 
   <template>
      <style>
@@ -34,7 +34,7 @@ Element providing proof of concept of a Thing card, with all needed features
     }
     </style>
 <fd-ispermitted permission="auth:roles:update" allowed="{{canUpdate}}"></fd-ispermitted>
-<fd-generic-item item="{{role}}" uuid="{{uuid}}" guest="{{guest}}" mode="{{mode}}" type="system/roles" ensettings="{{canUpdate}}">
+<fd-generic-item uuidfield="name" item="{{role}}" uuid="{{uuid}}" guest="{{guest}}" mode="{{mode}}" type="system/roles" ensettings="{{canUpdate}}" encopy="{{encopy}}">
 <icon>
     <paper-icon-button icon="social:people"></paper-icon-button>
 </icon>
@@ -45,7 +45,7 @@ Element providing proof of concept of a Thing card, with all needed features
   <div layout vertical>
     <h3>{{role.name}}</h3>
     <div>
-      {{'permissions' | translate}}: 
+      {{'permissions' | t}}: 
       <fd-tags tags="{{role.permissions}}"></fd-tags>
     </div>
   </div>

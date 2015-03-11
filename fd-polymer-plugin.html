@@ -59,10 +59,12 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
 <div layout vertical>
 <h3>{{plugin.pluginName}}</h3>
-<paper-input label="{{'name' | t }}" value="{{plugin.name}}" floatingLabel></paper-input>
+<paper-input label="{{'name' | t }}" value="{{plugin.pluginName}}" floatingLabel></paper-input>
 <paper-input label="{{'description' | t }}" value="{{plugin.description}}" floatingLabel></paper-input>
 <paper-input label="{{'category' | t }}" value="{{plugin.category}}"floatingLabel></paper-input>
-<paper-input label="{{'address' | t }}" value="{{plugin.phisicalAddress}}" floatingLabel></paper-input>
+<paper-input label="{{'listenOn' | t }}" value="{{plugin.listenOn}}" floatingLabel></paper-input>
+<paper-input label="{{'sendOn' | t }}" value="{{plugin.sendOn}}" floatingLabel></paper-input>
+<fd-properties props="{{plugin.configuration.props}}"></fd-properties>
 </div>
 </modify>
 </fd-generic-item>
