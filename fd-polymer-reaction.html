@@ -19,7 +19,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-reaction" attributes="ssl address port apiVersion reaction uuid guest mode">
+<polymer-element name="fd-reaction" attributes="ssl address port apiVersion reaction uuid guest mode enshape">
 
   <template>
      <style>
@@ -41,7 +41,7 @@ Element providing proof of concept of a Thing card, with all needed features
   </fd-api-settings>
 
 <fd-ispermitted permission="reactions:update" allowed="{{canUpdate}}"></fd-ispermitted>  
-<fd-generic-item type="reactions" on-icon-tap="" mode="{{mode}}" item="{{reaction}}" guest="{{guest}}" uuid="{{uuid}}" ensettings="{{canUpdate}}">
+<fd-generic-item type="reactions" on-icon-tap="" mode="{{mode}}" item="{{reaction}}" guest="{{guest}}" uuid="{{uuid}}" ensettings="{{canUpdate}}"  enshape="{{enshape}}">
 <icon>
   <paper-icon-button icon="gesture"></paper-icon-button>
 </icon>

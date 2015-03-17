@@ -25,7 +25,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-command" attributes="ssl address port apiVersion command uuid guest mode encopy">
+<polymer-element name="fd-command" attributes="ssl address port apiVersion command uuid guest mode encopy enshape">
 
   <template>
     <style>
@@ -44,7 +44,7 @@ Element providing proof of concept of a Thing card, with all needed features
     </fd-rest-service>
 
     <fd-ispermitted permission="commands:update" allowed="{{canUpdate}}"></fd-ispermitted>
-    <fd-generic-item on-icon-tap="{{tapObject}}" mode="{{mode}}" guest="{{guest}}" item="{{command}}" uuid="{{uuid}}" type="commands/user" encopy="{{encopy}}" ensettings="{{canUpdate}}">
+    <fd-generic-item on-icon-tap="{{tapObject}}" mode="{{mode}}" guest="{{guest}}" item="{{command}}" uuid="{{uuid}}" type="commands/user" encopy="{{encopy}}" ensettings="{{canUpdate}}" enshape="{{enshape}}">
       <icon>
         <paper-icon-button icon="send">
         </paper-icon-button>

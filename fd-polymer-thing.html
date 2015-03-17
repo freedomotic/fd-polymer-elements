@@ -22,7 +22,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-thing" attributes="ssl address port apiVersion object uuid guest mode encopy">
+<polymer-element name="fd-thing" attributes="ssl address port apiVersion object uuid guest mode encopy enshape">
 
   <template>
      <style>
@@ -54,7 +54,7 @@ Element providing proof of concept of a Thing card, with all needed features
   </fd-rest-service>  
 
 <fd-ispermitted permission="objects:update" allowed="{{canUpdate}}"></fd-ispermitted>
-<fd-generic-item on-icon-tap="{{tapObject}}" encopy="{{encopy}}" ensettings="{{canUpdate}}" mode="{{mode}}" guest="{{guest}}" item="{{object}}" uuid="{{uuid}}" type="things" wsType="objectchange" enextra="true">
+<fd-generic-item on-icon-tap="{{tapObject}}" encopy="{{encopy}}" ensettings="{{canUpdate}}" mode="{{mode}}" guest="{{guest}}" item="{{object}}" uuid="{{uuid}}" type="things" wsType="objectchange" enextra="true" enshape="{{enshape}}">
 <icon>
   <paper-icon-button src="{{objectIcon | asFreedomoticResource(apiUrl) }}" on-tap="{{tapObject}}" >
   </paper-icon-button>
@@ -77,10 +77,10 @@ Element providing proof of concept of a Thing card, with all needed features
 <modify>
 <div layout vertical>
 <h3>{{object.name}}</h3>
-<paper-input label="{{'name' | t(apiUrl) }}" value="{{object.name}}" floatingLabel></paper-input>
-<paper-input label="{{'description' | t(apiUrl) }}" value="{{object.description}}" floatingLabel></paper-input>
-<paper-input label="{{'protocol' | t(apiUrl) }}" value="{{object.protocol}}"floatingLabel></paper-input>
-<paper-input label="{{'address' | t(apiUrl) }}" value="{{object.phisicalAddress}}" floatingLabel></paper-input>
+<paper-input label="{{'name' | t }}" value="{{object.name}}" floatingLabel></paper-input>
+<paper-input label="{{'description' | t }}" value="{{object.description}}" floatingLabel></paper-input>
+<paper-input label="{{'protocol' | t }}" value="{{object.protocol}}"floatingLabel></paper-input>
+<paper-input label="{{'address' | t }}" value="{{object.phisicalAddress}}" floatingLabel></paper-input>
 </div>
 </modify>
 </fd-generic-item>

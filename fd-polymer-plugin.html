@@ -21,7 +21,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-plugin" attributes="ssl address port apiVersion plugin uuid guest mode">
+<polymer-element name="fd-plugin" attributes="ssl address port apiVersion plugin uuid guest mode enshape">
   <template>
      <style>
     :host {
@@ -46,7 +46,7 @@ Element providing proof of concept of a Thing card, with all needed features
   </fd-rest-service>
 
 <fd-ispermitted permission="sys:plugins:update" allowed="{{canUpdate}}"></fd-ispermitted>
-<fd-generic-item on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="plugins" enextra="false" ensettings="{{canUpdate}}" item="{{plugin}}" guest="{{guest}}" uuid="{{uuid}}" wsType="pluginchange" >
+<fd-generic-item on-icon-tap="{{tapPlugin}}" mode="{{mode}}" type="plugins" enextra="false" ensettings="{{canUpdate}}" item="{{plugin}}" guest="{{guest}}" uuid="{{uuid}}" wsType="pluginchange" enshape="{{enshape}}">
 <icon>
   <paper-icon-button src="{{ plugin.uuid + '-' + plugin.currentPluginStatus + '.png' | asFreedomoticResource(apiUrl, 'plugin-' + plugin.currentPluginStatus + '.png') }}" >
   </paper-icon-button>

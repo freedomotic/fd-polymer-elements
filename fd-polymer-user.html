@@ -19,7 +19,7 @@ Element providing proof of concept of a Thing card, with all needed features
 @status beta
 @homepage http://bestmazzo.github.io/fd-polymer-thing
 -->
-<polymer-element name="fd-user" attributes="ssl address port apiVersion user uuid guest mode encopy">
+<polymer-element name="fd-user" attributes="ssl address port apiVersion user uuid guest mode encopy enshape">
 
   <template>
      <style>
@@ -40,7 +40,7 @@ Element providing proof of concept of a Thing card, with all needed features
     apiUrl="{{apiUrl}}">
   </fd-api-settings>
 <fd-ispermitted permission="auth:users:update" allowed="{{canUpdate}}"></fd-ispermitted>  
-<fd-generic-item uuidfield="name" type="users" on-icon-tap="" ensettings="{{canUpdate}}" mode="{{mode}}" item="{{user}}" guest="{{guest}}" uuid="{{uuid}}" encopy="{{encopy}}">
+<fd-generic-item uuidfield="name" type="users" on-icon-tap="" ensettings="{{canUpdate}}" mode="{{mode}}" item="{{user}}" guest="{{guest}}" uuid="{{uuid}}" encopy="{{encopy}}" enshape="{{enshape}}">
 <icon>
   <template if="{{!!user.properties.iconfile}}">
     <paper-icon-button src="{{user.props.iconfile | asFreedomoticResource(apiUrl) }}" ></paper-icon-button>
