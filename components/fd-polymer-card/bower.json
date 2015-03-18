@@ -1,0 +1,39 @@
+{
+  "name": "fd-polymer-card",
+  "version": "0.5.8",
+  "keywords": [
+    "freedomotic",
+    "seed",
+    "polymer",
+    "web-components"
+  ],
+  "main": "fd-polymer-card.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.5",
+    "fd-polymer-ispermitted": "^0.2.0",
+    "fd-polymer-i18next-translate": "~0.2.4"
+  },
+  "devDependencies": {
+    "polymer-test-tools": "Polymer/polymer-test-tools#^0.5.5"
+  },
+  "authors": [
+    "Matteo Mazzoni <matteo@bestmazzo.it>",
+    "Niko Zarzani <niko.zarzani@nautes.com>"
+  ],
+  "description": "Element providing a generic card",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "../",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "core-component-page": "^0.5",
+    "polymer": "^0.5.5",
+    "fd-polymer-ws-service": "^0.2.0",
+    "fd-polymer-api-settings": "^0.2.2"
+  }
+}

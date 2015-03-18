@@ -1,0 +1,81 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../x-websocket/dist/x-websocket.html">
+<link rel="import" href="../fd-polymer-api-settings/fd-polymer-api-settings.html">
+
+<!--
+Element providing a service for interfacing Freedomotic's WebSocket APIs.
+
+##### Example
+
+    <fd-ws-service wstype="objectChange"></fd-ws-service>
+
+@element fd-ws-service
+@blurb Element providing a service for interfacing Freedomotic's WebSocket APIs.
+@status alpha
+@homepage http://freedomotic.github.io/fd-polymer-ws-service
+-->
+
+<polymer-element name="fd-generic-ws" attributes="type ssl address port apiVersion auto">
+    <template>
+    </template>
+    <script>
+        var fdws = [];
+        var fdwsConnected = [];
+        Polymer("fd-generic-ws", {
+            type: undefined,
+            auto: false,
+            get connected() {
+                return fdwsConnected;
+            },
+            get service() {
+                return fdws;
+            },
+            ready: function() {
+                this.reloadWS();
+            },
+            typeChanged: function() {
+                this.reloadWS();
+            },
+            reloadWS: function() {
+                if (!!this.type && !!this.auto) {
+                    if (!this.service[this.type]) {
+                        this.service[this.type] = document.createElement("fd-ws-service");
+                        this.service[this.type].wstype = this.type;
+                        this.service[this.type].id = this.type;
+                        this.service[this.type].auto = this.auto;
+                        // console.log("CREATING WS:", this.type, "->",this.service[this.type]);
+                    }
+                    // console.log("USING WS:", this.type, "->", this.service[this.type]);
+                    var self = this;
+                    // TODO: find a way of deregistering event listeners!
+                    this.service[this.type].addEventListener('message', function(e) {
+
+                        var det = JSON.parse(e.detail);
+                        self.onMessage(e, det, self);
+                    });
+                    this.service[this.type].addEventListener('open', function(e) {
+                        self.connected[self.type] = true;
+                        self.onOpen(e, self);
+                    });
+                }
+            },
+            onMessage: function(e, details, self) {
+                // override function in child element
+                self.fire("message",details);
+            },
+            onOpen: function(e, self) {
+                // override function in child element
+                self.fire("open",e);
+            },
+            send: function(obj) {
+                //    console.log("WS SEND:", this.type, this.connected, obj);
+                if (this.connected[this.type]) {
+                    this.service[this.type].send(obj);
+                }
+            },
+            autoChanged: function(){
+                this.reloadWS();
+            }
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,46 @@
+{
+  "name": "fd-polymer-ws-service",
+  "version": "0.2.0",
+  "keywords": [
+    "freedomotic",
+    "seed",
+    "polymer",
+    "web-components"
+  ],
+  "main": "fd-polymer-ws-service.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.5",
+    "fd-polymer-api-settings": "^0.2.2",
+    "x-websocket": "~0.2.0"
+  },
+  "devDependencies": {
+    "polymer-test-tools": "Polymer/polymer-test-tools#^0.5.5"
+  },
+  "authors": [
+    "Matteo Mazzoni <matteo@bestmazzo.it>",
+    "Niko Zarzani <niko.zarzani@nautes.com>"
+  ],
+  "description": "Element providing a service for interfacing Freedomotic's WebSocket APIs",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "../",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "core-component-page": "^0.5.5"
+  },
+  "homepage": "https://github.com/freedomotic/fd-polymer-ws-service",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "12298fa6417a5273aee717dc7cc33cd22d540d44"
+  },
+  "_source": "git://github.com/freedomotic/fd-polymer-ws-service.git",
+  "_target": "~0.2.0",
+  "_originalSource": "fd-polymer-ws-service"
+}

@@ -1,0 +1,50 @@
+{
+  "name": "fd-polymer-generics",
+  "version": "0.2.9",
+  "keywords": [
+    "freedomotic",
+    "seed",
+    "polymer",
+    "web-components"
+  ],
+  "main": "fd-polymer-generics.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.5",
+    "fd-polymer-card": "~0.5.8",
+    "fd-polymer-rest-service": "~0.2.6",
+    "fd-polymer-ws-service": "~0.2.0",
+    "paper-elements": "polymer/paper-elements#~0.5.5"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^2.0.0"
+  },
+  "authors": [
+    "Matteo Mazzoni <matteo@bestmazzo.it>",
+    "Niko Zarzani <niko.zarzani@nautes.com>"
+  ],
+  "description": "Elements providing a basic way to show sinlge or multimple items",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "../",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "core-component-page": "^0.5",
+    "polymer": "^0.5.1",
+    "fd-polymer-api-settings": "~0.2.0"
+  },
+  "homepage": "https://github.com/freedomotic/fd-polymer-generics",
+  "_release": "0.2.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.9",
+    "commit": "138265de28eee61c99b518ecef7612458c2c18cb"
+  },
+  "_source": "git://github.com/freedomotic/fd-polymer-generics.git",
+  "_target": "~0.2.9",
+  "_originalSource": "fd-polymer-generics"
+}
